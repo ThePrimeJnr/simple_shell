@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Get the branch name from command-line argument
+branch_name=$1
+
+# Check if the branch name is provided
+if [ -z "$branch_name" ]; then
+    echo "Please provide the branch name."
+    exit 1
+fi
+
+# Delete branch locally
+echo "Deleting local branch '$branch_name'..."
+git branch -d "$branch_name"
+
+# Delete branch remotely
+echo "Deleting remote branch '$branch_name'..."
+git push origin --delete "$branch_name"
+
+echo "Branch '$branch_name' has been deleted both locally and remotely."
+
