@@ -3,7 +3,8 @@
 
 int main(void)
 {
-	printf("pid: %d\n", getppid());
+	printf("pid: %d\n", getpid());
+	printf("ppid: %d\n", getppid());
 
 	return (0);
 }
