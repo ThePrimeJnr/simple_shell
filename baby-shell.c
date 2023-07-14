@@ -2,14 +2,15 @@
 
 int main(void)
 {
-	char string;
+	char *line = NULL;
+	size_t len = 0;
 
-	for(int i=1;i;i++)
+	while(1)
 	{
 		printf("$ ");
-		scanf("%s", &string);
+		getline(&line, &len, stdin);
 
-		printf("%c\n\n", string);
+		printf("%s\n", line);
 	}
 	return (0);
 }
