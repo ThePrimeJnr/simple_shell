@@ -23,7 +23,7 @@ int main(void)
 			i++;
 			array[i] = strtok(0, " \n");
 		}
-		
+
 		cpid = fork();
 		if (cpid == 0)
 			execve(array[0], array, NULL);

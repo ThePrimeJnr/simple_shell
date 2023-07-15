@@ -2,12 +2,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char* argv[], char *env[])
 {
-	char *shell = "/bin/sh";
 	char *args[] = {"/bin/sh", NULL};
-	char *env[] = {NULL};
 
-	execve(shell, args, env);
-	exit(EXIT_FAILURE);
+	execve(args[0], args, env);
 }
+
