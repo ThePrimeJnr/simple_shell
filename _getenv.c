@@ -1,12 +1,23 @@
-#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
-int main(int argc, char *argv[], char *env[])
+int main(void)
 {
-	int i =0;
-	while(strcmp(strtok(env[i], "="), argv[1]))
-		i++;
+	extern char** environ;
+	int i;
+	char *name = "ZSH";
 
-	printf("%s", strtok(0, "="));
-	return (0);
+	for (i = 0; environ[i] != NULL; ++i)
+	{
+		if (strcmp(strtok(environ[i], "="), name) == 0)
+		{
+			printf("%s\n", strtok(0, "="));
+			return (0);
+		}
+	}
+
+	printf("%s\n", "Not Found");
+	return (1);
 }
+
