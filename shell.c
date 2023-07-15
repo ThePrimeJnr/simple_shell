@@ -16,8 +16,10 @@ int main(int argc, char *argv[])
 	while(1)
 	{
 		printf("#cisfun ");
-		getline(&line, &len, stdin);
-
+		int read = getline(&line, &len, stdin);
+		if (read == -1) {
+			break; // Exit the loop on end-of-file
+		}
 		command[0] = strtok(line, " \n");
 
 		for (i = 1; command[i]; i++)
