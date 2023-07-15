@@ -8,44 +8,50 @@
 
 int main(int argc, char *argv[])
 {
-	char *line = NULL, *command[1024];
-	size_t len = 0, i = 0;
-	pid_t cpid;
-	struct stat st;
+    char *line = NULL, *command[1024];
+    size_t len = 0, i = 0;
+    pid_t cpid;
+    struct stat st;
+    int read;
 
-	while(1)
-	{
-		printf("#cisfun ");
-		int read = getline(&line, &len, stdin);
-		if (read == -1) {
-			break; // Exit the loop on end-of-file
-		}
-		command[0] = strtok(line, " \n");
+    while (1)
+    {
+        printf("#cisfun ");
+        read = getline(&line, &len, stdin);
+	
+	printf("read: %i\n", read);
+        if (read == -1) {
+            break;
+        }
 
-		for (i = 1; command[i]; i++)
-			command[i] = strtok(0, " \n");
-		
-		if (command[0])
-		{
-			if (stat(command[0], &st) == 0)
-			{
-				cpid = fork();
-				if (cpid == -1)
-				{
-					perror("Error: ");
-					return (-1);
-				}
-				if (cpid == 0)
-					execve(command[0], command, NULL);
+        command[0] = strtok(line, " \n");
 
-			}
-			else
-				printf("%s: No such file or directory\n", argv[0]);
-		}
+        for (i = 1; command[i]; i++)
+            command[i] = strtok(NULL, " \n");
 
-		wait(&cpid);
-	}
+        if (command[0])
+        {
+            if (stat(command[0], &st) == 0)
+            {
+                cpid = fork();
+                if (cpid == -1)
+                {
+                    perror("Error: ");
+                    return (-1);
+                }
+                if (cpid == 0)
+                    execve(command[0], command, NULL);
 
-	return (0);
+            }
+            else
+                printf("%s: No such file or directory\n", argv[0]);
+        }
+
+        wait(&cpid);
+    }
+
+    free(line);
+
+    return (0);
 }
 
