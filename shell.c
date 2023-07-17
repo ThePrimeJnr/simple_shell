@@ -6,6 +6,14 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+/**
+* main - Entry point
+* @argc: argument count
+* @argv: argumen vector
+*
+* Return: 0 for success, others for failure
+*/
+
 int main(int argc, char *argv[])
 {
 	char *line = NULL, *command[1024];
