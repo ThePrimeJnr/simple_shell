@@ -16,17 +16,17 @@ int main(int argc, char *argv[])
 
     while (1)
     {
-        printf("#cisfun ");
+        if (isatty(0))
+            printf("#cisfun ");
+
         read = getline(&line, &len, stdin);
-	
-	printf("read: %i\n", read);
-        if (read == -1) {
+
+        if (read == -1)
             break;
-        }
 
         command[0] = strtok(line, " \n");
 
-        for (i = 1; command[i]; i++)
+        for (i = 1; command[i - 1]; i++)
             command[i] = strtok(NULL, " \n");
 
         if (command[0])
@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
                 }
                 if (cpid == 0)
                     execve(command[0], command, NULL);
-
             }
             else
                 printf("%s: No such file or directory\n", argv[0]);
@@ -54,4 +53,3 @@ int main(int argc, char *argv[])
 
     return (0);
 }
-
