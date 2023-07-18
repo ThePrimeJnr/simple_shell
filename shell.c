@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
+#include "shell.h" 
 
 /**
 * main - Entry point
@@ -14,18 +8,21 @@
 * Return: 0 for success, others for failure
 */
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char *env[])
 {
 	char *line = NULL, *command[1024];
+	int read;
 	size_t len = 0, i = 0;
 	pid_t cpid;
+	path *head;
 	struct stat st;
-	int read;
+
+	head = initpath(head, env);
 
 	while (1)
 	{
 		if (isatty(0))
-			printf("#cisfun ");
+			printf("$ ");
 
 		read = getline(&line, &len, stdin);
 
@@ -39,7 +36,8 @@ int main(int argc, char *argv[])
 
 		if (command[0])
 		{
-			if (stat(command[0], &st) == 0)
+			char *abs_path = findpath(head, command[0]);
+			if (abs_path != NULL)
 			{
 				cpid = fork();
 				if (cpid == -1)
