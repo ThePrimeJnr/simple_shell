@@ -23,7 +23,7 @@ int main(int argc, char *argv[], char *env[])
 			exit(0);
 
 		if (exec_command(parseline(line)))
-			printf("%s: No such file or directory", argv[0]);
+			printf("%s: No such file or directory\n", argv[0]);
 
 		wait(NULL);
 	}
@@ -63,7 +63,7 @@ int exec_command(char *command[])
 				if (cpid == 0)
 				{
 					execve(command_path, command, environ);
-					return (0);
+					exit(0);
 				}
 			}
 			else
@@ -77,19 +77,22 @@ int exec_command(char *command[])
 
 int handle_builtin(char *command[])
 {
-	int i= 0;
-
 	if(!strcmp(command[0], "exit"))
 		exit(0);
 	else if(!strcmp(command[0], "env"))
-	{
-		while(environ[i])
-		{
-			printf("%s\n", environ[i]);
-			i++;
-		}
-		return (0);
-	}
+		printarray(command);
 	
 	return (-1);
+}
+
+int printarray(char *array[])
+{
+	int i = 0;
+
+	while(array[i])
+	{
+		printf("%s\n", array[i]);
+		i++;
+	}
+	return (0);
 }

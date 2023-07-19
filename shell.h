@@ -23,6 +23,7 @@ int handle_builtin(char *command[]);
 int arraycpy(char *dest[], char *src[]);
 char **parseline(char *line);
 int exec_command(char *command[]);
+int printarray(char *array[]);
 
 extern char **environ;
 path *pathv;
