@@ -1,17 +1,18 @@
-#include "shell.h" 
+#include "shell.h"
 
 /**
-* main - Entry point
-* @argc: argument count
-* @argv: argumen vector
-* @env: environment variable
-*
-* Return: 0 for success, others for failure
-*/
+ * main - Entry point
+ * @argc: argument count
+ * @argv: argumen vector
+ * @env: environment variable
+ *
+ * Return: 0 for success, others for failure
+ */
 int main(int argc, char *argv[], char *env[])
 {
 	char *line = NULL;
 	size_t len = 0;
+
 	pathv = initpath();
 
 	while (1)
@@ -34,14 +35,14 @@ int main(int argc, char *argv[], char *env[])
 
 char **parseline(char *line)
 {
-    int i = 0;
-    char **command = malloc(1024 * sizeof(char *));
+	int i = 0;
+	char **command = malloc(1024 * sizeof(char *));
 
-    command[0] = strtok(line, " \n");
-    for (i = 1; command[i - 1]; i++)
-        command[i] = strtok(NULL, " \n");
+	command[0] = strtok(line, " \n");
+	for (i = 1; command[i - 1]; i++)
+		command[i] = strtok(NULL, " \n");
 
-    return command;
+	return (command);
 }
 
 
@@ -77,11 +78,11 @@ int exec_command(char *command[])
 
 int handle_builtin(char *command[])
 {
-	if(!strcmp(command[0], "exit"))
+	if (!strcmp(command[0], "exit"))
 		exit(0);
-	else if(!strcmp(command[0], "env"))
+	else if (!strcmp(command[0], "env"))
 		printarray(command);
-	
+
 	return (-1);
 }
 
@@ -89,7 +90,7 @@ int printarray(char *array[])
 {
 	int i = 0;
 
-	while(array[i])
+	while (array[i])
 	{
 		printf("%s\n", array[i]);
 		i++;
