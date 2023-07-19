@@ -10,10 +10,9 @@
 */
 int main(int argc, char *argv[], char *env[])
 {
-	char *line = NULL, *command_path, *command[1024];
-	int read, i = 0;
+	char *line = NULL;
 	size_t len = 0;
-	path *pathv = initpath(head, env);
+	pathv = initpath();
 
 	while (1)
 	{
@@ -23,9 +22,8 @@ int main(int argc, char *argv[], char *env[])
 		if (getline(&line, &len, stdin) == -1)
 			exit(0);
 
-		arraycpy(command, parseline(line));
-		
-		exec_command(command, pathv, env);
+		if (exec_command(parseline(line)))
+			printf("%s: No such file or directory", argv[0]);
 
 		wait(NULL);
 	}
@@ -33,69 +31,65 @@ int main(int argc, char *argv[], char *env[])
 	return (0);
 }
 
+
 char **parseline(char *line)
 {
     int i = 0;
-    char **str = malloc(1024 * sizeof(char *));
+    char **command = malloc(1024 * sizeof(char *));
 
-    str[0] = strtok(line, " \n");
-    for (i = 1; str[i - 1]; i++)
-        str[i] = strtok(NULL, " \n");
+    command[0] = strtok(line, " \n");
+    for (i = 1; command[i - 1]; i++)
+        command[i] = strtok(NULL, " \n");
 
-    return str;
+    return command;
 }
 
 
-int handle_builtin(char *command[], char *env[])
-{
-	int i= 0;
-
-	if(!strcmp(command[0], "exit"))
-		exit(0);
-	if(!strcmp(command[0], "env"))
-	{
-		while(env[i])
-		{
-			printf("%s\n", env[i]);
-			i++;
-		}
-	}
-	
-	return (-1);
-}
-
-int exec_command(char *command[], path *head, char *env[])
+int exec_command(char *command[])
 {
 	char *command_path;
 	pid_t cpid;
 
 	if (command[0])
 	{
-		if (handle_builtin(command, env))
+		if (handle_builtin(command))
 		{
-			command_path = findpath(head, command[0]);
+			command_path = findpath(pathv, command[0]);
 			if (command_path)
 			{
 				cpid = fork();
 				if (cpid == -1)
-					return (-1);
+					return (0);
 				if (cpid == 0)
-					execve(command_path, command, NULL);
+				{
+					execve(command_path, command, environ);
+					return (0);
+				}
 			}
 			else
-				printf("%s: No such file or directory\n", "test");
+				return (-1);
 		}
 	}
+
+	return (0);
 }
 
-int arraycpy(char *dest[], char *src[]) {
-    int i = 0;
 
-    while (src[i] != NULL) {
-        dest[i] = src[i];
-        i++;
-    }
-    dest[i] = NULL;
+int handle_builtin(char *command[])
+{
+	int i= 0;
 
-    return i; // Returns the number of elements copied
+	if(!strcmp(command[0], "exit"))
+		exit(0);
+	else if(!strcmp(command[0], "env"))
+	{
+		while(environ[i])
+		{
+			printf("%s\n", environ[i]);
+			i++;
+		}
+		return (0);
+	}
+	
+	return (-1);
 }

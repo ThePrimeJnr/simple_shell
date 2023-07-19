@@ -3,18 +3,19 @@
  *
  * 
  */
-path *initpath(path *head, char *env[])
+path *initpath()
 {
+	int i;
 	char *var, *value;
-	path *temp;
+	path *head, *temp;
 
 	head = NULL;
 
-	var = strtok(env[0], "=");
+	var = strtok(environ[0], "=");
 
-	for (int i = 1; env[i]; i++)
+	for (i = 1; environ[i]; i++)
 	{
-		var = strtok(env[i], "=");
+		var = strtok(environ[i], "=");
 
 		if (!strcmp(var, "PATH"))
 		{
@@ -40,7 +41,6 @@ path *initpath(path *head, char *env[])
 char *findpath(path *head, char *command)
 {
 	if (access(command, X_OK) == 0)
-
 		return (strdup(command));
 
 

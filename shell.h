@@ -16,12 +16,15 @@ typedef struct path
 	struct path *next;
 } path;
 
-path *initpath(path *head, char *env[]);
+path *initpath();
 path *printpath(path *head);
 char *findpath(path *head, char *command);
-int handle_builtin(char *command[], char *env[]);
+int handle_builtin(char *command[]);
 int arraycpy(char *dest[], char *src[]);
 char **parseline(char *line);
-int exec_command(char *command[], path *head, char *env[]);
+int exec_command(char *command[]);
+
+extern char **environ;
+path *pathv;
 
 #endif /* SHELL_H */
