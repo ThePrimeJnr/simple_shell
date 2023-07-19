@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
  *
- * 
+ *
  */
 path *initpath()
 {
