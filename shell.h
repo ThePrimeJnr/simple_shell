@@ -20,5 +20,8 @@ path *initpath(path *head, char *env[]);
 path *printpath(path *head);
 char *findpath(path *head, char *command);
 int handle_builtin(char *command[], char *env[]);
+int arraycpy(char *dest[], char *src[]);
+char **parseline(char *line);
+int exec_command(char *command[], path *head, char *env[]);
 
 #endif /* SHELL_H */

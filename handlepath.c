@@ -43,7 +43,9 @@ char *findpath(path *head, char *command) {
 
     while (current != NULL) {
         char abs_path[1024];
-        snprintf(abs_path, sizeof(abs_path), "%s/%s", current->dir, command);
+        strcpy(abs_path, current->dir);
+        strcat(abs_path, "/");
+        strcat(abs_path, command);
         if (access(abs_path, X_OK) == 0) {
             return strdup(abs_path);
         }
