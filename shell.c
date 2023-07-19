@@ -36,8 +36,10 @@ int main(int argc, char *argv[], char *env[])
 
 		if (command[0])
 		{
-			char *abs_path = findpath(head, command[0]);
-			if (abs_path != NULL)
+			if (strcmp(command[0], "exit") == 0)
+				return (1);
+			command[0] = findpath(head, command[0]);
+			if (command[0] != NULL)
 			{
 				cpid = fork();
 				if (cpid == -1)

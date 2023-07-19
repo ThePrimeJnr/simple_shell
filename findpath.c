@@ -4,10 +4,11 @@ char *findpath(path *head, char *command) {
     path *current = head;
 
     while (current != NULL) {
-        char *abs_path = strcat(strcat(current->dir, "/"), command);
+        char abs_path[1024];
+        snprintf(abs_path, sizeof(abs_path), "%s/%s", current->dir, command);
         struct stat st;
         if (stat(abs_path, &st) == 0) {
-            return abs_path;
+            return strdup(abs_path);
         }
         current = current->next;
     }
