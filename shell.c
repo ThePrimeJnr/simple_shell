@@ -8,10 +8,9 @@
 *
 * Return: 0 for success, others for failure
 */
-
 int main(int argc, char *argv[], char *env[])
 {
-	char *line = NULL, *command[1024];
+	char *line = NULL, *command_path, *command[1024];
 	int read, i = 0;
 	size_t len = 0;
 	pid_t cpid;
@@ -32,25 +31,41 @@ int main(int argc, char *argv[], char *env[])
 
 		if (command[0])
 		{
-			if (!strcmp(command[0], "exit"))
-				return (0);
-			command[0] = findpath(head, command[0]);
-			if (command[0])
+			if (handle_builtin(command, env))
 			{
-				cpid = fork();
-				if (cpid == -1)
-					return (-1);
-				if (cpid == 0)
-					execve(command[0], command, NULL);
+				command_path = findpath(head, command[0]);
+				if (command_path)
+				{
+					cpid = fork();
+					if (cpid == -1)
+						return (-1);
+					if (cpid == 0)
+						execve(command_path, command, NULL);
+				}
+				else
+					printf("%s: No such file or directory\n", argv[0]);
 			}
-			else
-				printf("%s: No such file or directory\n", argv[0]);
 		}
-
-		wait(&cpid);
+		wait(NULL);
 	}
-
 	free(line);
-
 	return (0);
+}
+
+int handle_builtin(char *command[], char *env[])
+{
+	int i= 0;
+
+	if(!strcmp(command[0], "exit"))
+		exit(0);
+	if(!strcmp(command[0], "env"))
+	{
+		while(env[i])
+		{
+			printf("%s\n", env[i]);
+			i++;
+		}
+	}
+	
+	return (-1);
 }
