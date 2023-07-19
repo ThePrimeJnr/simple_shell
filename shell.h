@@ -1,6 +1,7 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+#include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -11,8 +12,8 @@
 
 typedef struct path
 {
-    char *dir;
-    struct path *next;
+	char *dir;
+	struct path *next;
 } path;
 
 path *initpath(path *head, char *env[]);
