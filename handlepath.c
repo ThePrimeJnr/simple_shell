@@ -61,7 +61,7 @@ char *findpath(path *head, char *command)
 {
 	path *current = head;
 
-	if (access(command, X_OK) == 0)
+	if (access(command, F_OK) == 0)
 		return (strdup(command));
 
 	while (current != NULL)
@@ -71,7 +71,7 @@ char *findpath(path *head, char *command)
 		strcpy(abs_path, current->dir);
 		strcat(abs_path, "/");
 		strcat(abs_path, command);
-		if (access(abs_path, X_OK) == 0)
+		if (access(abs_path, F_OK) == 0)
 		{
 			return (strdup(abs_path));
 		}

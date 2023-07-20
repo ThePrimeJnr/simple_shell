@@ -11,24 +11,27 @@ int main(int argc, char *argv[])
 {
 	char *line = NULL;
 	size_t len = 0;
+	int n = 1, status = 0;
 
 	pathv = initpath();
 
-	while (argc)
+	while (n)
 	{
 		if (isatty(0))
 			printf("$ ");
 
 		if (getline(&line, &len, stdin) == -1)
-			exit(0);
+			exit(status);
 
 		if (exec_command(parseline(line)))
-			printf("%s: No such file or directory\n", argv[0]);
-
-		wait(NULL);
+		{
+			fprintf(stderr, "%s: %d: %s: not found\n", argv[0], n, parseline(line)[0]);
+			status = 127;
+		}
+		n++;
 	}
 	free(line);
-	return (0);
+	return (status);
 }
 
 
@@ -47,33 +50,36 @@ char **parseline(char *line)
 
 int exec_command(char *command[])
 {
-	char *command_path;
-	pid_t cpid;
+    char *command_path;
+    pid_t cpid;
 
-	if (command[0])
-	{
-		if (handle_builtin(command))
-		{
-			command_path = findpath(pathv, command[0]);
-			if (command_path)
-			{
-				cpid = fork();
-				if (cpid == -1)
-					return (0);
-				if (cpid == 0)
-				{
-					execve(command_path, command, environ);
-					exit(0);
-				}
-			}
-			else
-				return (-1);
+    if (command[0])
+    {
+        if (handle_builtin(command))
+        {
+            command_path = findpath(pathv, command[0]);
+            if (command_path)
+            {
+                cpid = fork();
+                if (cpid == -1)
+                    return (0);
+                if (cpid == 0)
+                {
+                    execve(command_path, command, environ);
+                    perror("Error");
+                    exit(0);
 		}
-	}
+                else
+                    wait(NULL);
+                free(command_path);
+            }
+            else
+                return (127);
+        }
+    }
 
-	return (0);
+    return (0);
 }
-
 
 int handle_builtin(char *command[])
 {
