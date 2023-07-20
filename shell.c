@@ -4,18 +4,17 @@
  * main - Entry point
  * @argc: argument count
  * @argv: argumen vector
- * @env: environment variable
  *
  * Return: 0 for success, others for failure
  */
-int main(int argc, char *argv[], char *env[])
+int main(int argc, char *argv[])
 {
 	char *line = NULL;
 	size_t len = 0;
 
 	pathv = initpath();
 
-	while (1)
+	while (argc)
 	{
 		if (isatty(0))
 			printf("$ ");
