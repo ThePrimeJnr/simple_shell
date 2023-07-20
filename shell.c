@@ -80,7 +80,10 @@ int handle_builtin(char *command[])
 	if (!strcmp(command[0], "exit"))
 		exit(0);
 	else if (!strcmp(command[0], "env"))
-		printarray(command);
+	{
+		printarray(environ);
+		return (0);
+	}
 
 	return (-1);
 }

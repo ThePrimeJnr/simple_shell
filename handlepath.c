@@ -1,5 +1,21 @@
 #include "shell.h"
 
+char *_getenv(char *var)
+{
+	int i;
+	char *value = NULL;
+
+	for (i = 0; environ[i]; i++)
+	{
+		if (!strncmp(environ[i], var, strlen(var)))
+		{
+			value = environ[i] + strlen(var) + 1;
+			return (value);
+		}
+	}
+	return (value);
+
+}
 path *initpath()
 {
 	int i;
@@ -9,15 +25,7 @@ path *initpath()
 	path *head = NULL;
 	path *temp = NULL;
 
-	for (i = 0; environ[i]; i++)
-	{
-		if (!strncmp(environ[i], "PATH=", 5))
-		{
-			path_env = environ[i] + 5;
-			break;
-		}
-	}
-
+	path_env = _getenv("PATH");
 	if (path_env)
 	{
 		path_copy = strdup(path_env);
