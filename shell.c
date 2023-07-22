@@ -11,36 +11,52 @@ int main(int argc, char *argv[])
 {
 	char *line = NULL;
 	size_t len = 0;
-	int n = 1, status = 0;
+	int n = 1, status;
 
-	pathv = initpath();
+	envpath = initpath();
 
-	while (n)
+	for (n = 1; argc; n++)
 	{
-		if (isatty(0))
-			printf("$ ");
+		print_prompt("$ ");
 
 		if (getline(&line, &len, stdin) == -1)
-			exit(status);
+		exit(status);
 
-		if (exec_command(parseline(line)))
-		{
-			fprintf(stderr, "%s: %d: %s: not found\n", argv[0], n, parseline(line)[0]);
-			status = 127;
-		}
-		n++;
+		status = execute_command(parseline(line), n, argv[0]);
 	}
+
 	free(line);
 	return (status);
 }
 
+/**
+ * print_prompt - prints the prompt to standard output
+ * @prompt: prompt to be printed
+ *
+ * Return: 0 in interactive mode and 1 in non interactive mode
+ */
+int print_prompt(char *prompt)
+{
+	if (isatty(0))
+	{
+		_fputstr(1, prompt);
+		return (0);
+	}
+	return (1);
+}
 
+/**
+ * parseline - Tokenizes the line to get command and it's arguments
+ * @line: line to be tokenized
+ *
+ * Return: Pointer to the command and its arguments
+ */
 char **parseline(char *line)
 {
 	int i = 0;
-	char **command = malloc(1024 * sizeof(char *));
+	char **command = (char**)malloc(1024);
 
-	command[0] = strtok(line, " \n");
+	command[i] = strtok(line, " \n");
 	for (i = 1; command[i - 1]; i++)
 		command[i] = strtok(NULL, " \n");
 
@@ -48,60 +64,55 @@ char **parseline(char *line)
 }
 
 
-int exec_command(char *command[])
+int execute_command(char *command[], int n, char *shell)
 {
-    char *command_path;
-    pid_t cpid;
+	char *command_path;
+	pid_t cpid;
 
-    if (command[0])
-    {
-        if (handle_builtin(command))
-        {
-            command_path = findpath(pathv, command[0]);
-            if (command_path)
-            {
-                cpid = fork();
-                if (cpid == -1)
-                    return (0);
-                if (cpid == 0)
-                {
-                    execve(command_path, command, environ);
-                    perror("Error");
-                    exit(0);
+	if (command[0])
+	{
+		if (handle_builtin(command, n))
+		{
+			command_path = findpath(envpath, command[0]);
+			if (command_path)
+				{
+					cpid = fork();
+				if (cpid == -1)
+						return (0);
+						else if (cpid == 0)
+						{
+						execve(command_path, command, environ);
+					perror("Error");
+						exit(0);
+						}
+						else
+					wait(NULL);
+				}
+				else
+				{
+				_fprintf(2, "%s: %d: %s: not found\n", shell, n, command[0]);
+				return (127);
+			}
 		}
-                else
-                    wait(NULL);
-                free(command_path);
-            }
-            else
-                return (127);
-        }
-    }
+	}
 
-    return (0);
+	return (0);
 }
 
-int handle_builtin(char *command[])
+int handle_builtin(char *command[], int n)
 {
 	if (!strcmp(command[0], "exit"))
-		exit(0);
-	else if (!strcmp(command[0], "env"))
+		{
+			if (n == 1 || isatty(0))
+			exit(0);
+			exit(2);
+		}
+
+		else if (!strcmp(command[0], "env"))
 	{
-		printarray(environ);
-		return (0);
+	printarray(environ);
+	return (0);
 	}
 
 	return (-1);
-}
-
-int printarray(char *array[])
-{
-	int i = 0;
-
-	while (array[i])
-	{
-		printf("%s\n", array[i]);
-		i++;
-	}
-	return (0);
 }

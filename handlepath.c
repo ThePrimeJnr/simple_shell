@@ -7,18 +7,18 @@ char *_getenv(char *var)
 
 	for (i = 0; environ[i]; i++)
 	{
-		if (!strncmp(environ[i], var, strlen(var)))
+		if (!strncmp(environ[i], var, strlen(var)) && environ[i][strlen(var)] == '=')
 		{
 			value = environ[i] + strlen(var) + 1;
 			return (value);
 		}
 	}
 	return (value);
-
 }
+
+
 path *initpath()
 {
-	int i;
 	char *path_env = NULL;
 	char *path_copy = NULL;
 	char *dir = NULL;
@@ -29,7 +29,7 @@ path *initpath()
 	if (path_env)
 	{
 		path_copy = strdup(path_env);
-		if (!path_copy)
+	if (!path_copy)
 		{
 			perror("Memory allocation failed");
 			exit(EXIT_FAILURE);
@@ -51,7 +51,7 @@ path *initpath()
 			dir = strtok(NULL, ":");
 		}
 
-		free(path_copy);
+	free(path_copy);
 	}
 
 	return (head);
