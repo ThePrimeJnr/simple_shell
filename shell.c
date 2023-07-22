@@ -16,21 +16,24 @@
 
 int main(int argc, char *argv[])
 {
+	// what does this mean?
 	char *line = NULL, *command[1024];
 	size_t len = 0, i = 0;
+
 	pid_t cpid;
 	struct stat st;
 	int read;
 
 	while (1)
 	{
-		if (isatty(0))
-			printf("#cisfun ");
-
+		if (isatty(0)) {
+			printf("#cisfun");
+		};
 		read = getline(&line, &len, stdin);
 
-		if (read == -1)
+		if (read == -1) {
 			break;
+		};
 
 		command[0] = strtok(line, " \n");
 
@@ -45,19 +48,22 @@ int main(int argc, char *argv[])
 				if (cpid == -1)
 				{
 					perror("Error: ");
-					return (-1);
+					return -1;
 				}
-				if (cpid == 0)
+				else if (cpid == 0) {
 					execve(command[0], command, NULL);
-			}
-			else
+				};
+			}	
+			else {
 				printf("%s: No such file or directory\n", argv[0]);
+			}
 		}
 
 		wait(&cpid);
 	}
-
+	
+	// why using free? u didnt allocate memory from heap? did u ? :) 
 	free(line);
 
-	return (0);
+	return 0;
 }

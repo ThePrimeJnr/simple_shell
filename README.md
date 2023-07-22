@@ -22,3 +22,9 @@
 - Handle special charactors: ", ', `, \\, *, &, #.
 - Move the cursor.
 - Handle commands with arguments.
+
+### Usage:
+`clone repo`
+`make` to only compile the code using gcc
+`make run` to compile and run the code using gcc 
+
