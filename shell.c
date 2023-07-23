@@ -9,39 +9,27 @@
  */
 int main(int argc, char *argv[])
 {
-	char *line = NULL;
-	size_t len = 0;
+	char *line;
+	size_t len ;
 	int n = 1, status = 0;
 
 	envpath = initpath();
 
 	for (n = 1; argc; n++)
 	{
+		line = NULL;
 		print_prompt("$ ");
 
-		if (getline(&line, &len, stdin) == -1)
-		{
-			if (isatty(0))
-			{
-				if (n == 1)
-				{
-					_fprintf(1, "\n");
-					break;
-				}
-				else
-				{
-					main(argc, argv);
-				}
-			}
-			else
-				exit(status);
-		}
+		_getline(&line);
+
 		status = execute_command(parseline(line), n, argv[0]);
+		free(line);
 	}
 
-	free(line);
+	
 	return (status);
 }
+
 
 /**
  * print_prompt - prints the prompt to standard output
