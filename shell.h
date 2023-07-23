@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -37,5 +38,6 @@ ssize_t _getline(char **line);
 ssize_t _getchar(char c);
 extern char **environ;
 path *envpath;
+int status;
 
 #endif /* SHELL_H */

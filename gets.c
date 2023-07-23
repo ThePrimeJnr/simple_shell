@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 ssize_t _getline(char **line)
 {
 	char buf[1024];

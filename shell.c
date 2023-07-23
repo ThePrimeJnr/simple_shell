@@ -11,7 +11,8 @@ int main(int argc, char *argv[])
 {
 	char *line;
 	size_t len ;
-	int n = 1, status = 0;
+	int n = 1;
+	status = 0;
 
 	envpath = initpath();
 
@@ -91,7 +92,8 @@ int execute_command(char *command[], int n, char *shell)
 		else
 		{
 			_fprintf(2, "%s: %d: %s: not found\n", shell, n, command[0]);
-			return (127);
+			status = 127;
+			return (status);
 		}
 	}
 
@@ -105,9 +107,7 @@ int handle_builtin(char *command[], int n)
 {
 	if (!strcmp(command[0], "exit"))
 	{
-		if (n == 1 || isatty(0))
-			exit(0);
-		exit(2);
+		exit(status);
 	}
 	else if (!strcmp(command[0], "env"))
 	{
