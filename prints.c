@@ -61,7 +61,7 @@ int _fputint(int fd, int num)
 
 	val = num % 10;
 	num = num / 10;
-if (num)
+	if (num)
 		len += _fputint(fd, num);
 	len += _fputchar(fd, val + '0');
 
@@ -101,7 +101,7 @@ int _fprintf(int fd, const char *format, ...)
 }
 
 /**
- * _printarray - prints an array to standard output
+ * printarray - prints an array to standard output
  * @array: The array to be printed
  *
  * Return: Numbers of elements printed

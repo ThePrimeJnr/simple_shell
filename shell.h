@@ -18,7 +18,7 @@ typedef struct path
 	struct path *next;
 } path;
 
-path *initpath();
+path *initpath(void);
 path *printpath(path *head);
 char *findpath(path *head, char *command);
 int handle_builtin(char *command[], int n);

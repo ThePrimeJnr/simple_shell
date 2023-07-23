@@ -1,5 +1,11 @@
 #include "shell.h"
 
+/**
+ * _getenv - Finds a environment variable name and returns it's value
+ * @var: The variable name to be found
+ *
+ * Return: a pointer to the varible's value
+ */
 char *_getenv(char *var)
 {
 	int i;
@@ -17,7 +23,7 @@ char *_getenv(char *var)
 }
 
 
-path *initpath()
+path *initpath(void)
 {
 	char *path_env = NULL;
 	char *path_copy = NULL;
@@ -29,7 +35,7 @@ path *initpath()
 	if (path_env)
 	{
 		path_copy = strdup(path_env);
-	if (!path_copy)
+		if (!path_copy)
 		{
 			perror("Memory allocation failed");
 			exit(EXIT_FAILURE);
