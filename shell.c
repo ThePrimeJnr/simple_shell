@@ -3,34 +3,32 @@
 /**
  * main - Entry point
  * @argc: argument count
- * @argv: argumen vector
+ * @argv: argument vector
  *
  * Return: 0 for success, others for failure
  */
 int main(int argc, char *argv[])
 {
 	char *line;
-	size_t len ;
-	int n = 1;
+	char **command;
+
 	status = 0;
-
-	envpath = initpath();
-
-	for (n = 1; argc; n++)
+	for (argc = 1; argc; argc++)
 	{
-		line = NULL;
 		print_prompt("$ ");
 
 		_getline(&line);
 
-		status = execute_command(parseline(line), n, argv[0]);
+		parseline(&command, line);
+
+		status = execute_command(command, argv[0], argc);
+
 		free(line);
+		free(command);
 	}
 
-	
 	return (status);
 }
-
 
 /**
  * print_prompt - prints the prompt to standard output
@@ -43,9 +41,46 @@ int print_prompt(char *prompt)
 	if (isatty(0))
 	{
 		_fputstr(1, prompt);
-		return (0);
 	}
-	return (1);
+	return (0);
+}
+
+/**
+ * _getline - gets string from statndard input and stores in a buffer
+ * @line: buffer for the string to be stored
+ *
+ * Return: number of characters read, if errror returns -1;
+ */
+ssize_t _getline(char **line)
+{
+	char buf[1024];
+	ssize_t n = 0;
+
+	while ((read(0, &buf[n], 1)) && (buf[n] != '\n'))
+	{
+		n++;
+	}	
+	
+	if (buf[n] == '\n')
+	{
+		*line = malloc(sizeof(char) * (n + 1));
+		buf[n] = '\0';
+		strcpy(*line, buf);
+		return (n);
+	}
+	else if (n != 0)
+	{
+		buf[n] = '\0';
+		*line = malloc(sizeof(char) * (n + 1));
+		strcpy(*line, buf);
+		return (-1);
+	}
+	else
+	{
+		if (isatty(0))
+			_fprintf(1, "\n");
+		exit (status);
+	}
 }
 
 /**
@@ -54,20 +89,21 @@ int print_prompt(char *prompt)
  *
  * Return: Pointer to the command and its arguments
  */
-char **parseline(char *line)
+int parseline(char ***command, char *line)
 {
 	int i = 0;
-	char **command = (char **)malloc(1024);
 
-	command[i] = strtok(line, " \n");
-	for (i = 1; command[i - 1]; i++)
-		command[i] = strtok(NULL, " \n");
+	(*command) = malloc(sizeof(char) * 1024);
 
-	return (command);
+	(*command)[i] = strtok(line, " ");
+	for (i = 1; (*command)[i - 1]; i++)
+		(*command)[i] = strtok(NULL, " ");
+
+	(*command)[i] = NULL;
+	return (0);
 }
 
-
-int execute_command(char *command[], int n, char *shell)
+int execute_command(char *command[], char *shell, int n)
 {
 	char *command_path;
 	pid_t cpid;
@@ -87,7 +123,7 @@ int execute_command(char *command[], int n, char *shell)
 				exit(0);
 			}
 			else
-				wait(NULL);
+				waitpid(cpid, &status, 0);
 		}
 		else
 		{

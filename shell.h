@@ -24,8 +24,8 @@ path *printpath(path *head);
 char *findpath(path *head, char *command);
 int handle_builtin(char *command[], int n);
 int arraycpy(char *dest[], char *src[]);
-char **parseline(char *line);
-int execute_command(char *command[], int n, char *shell);
+int parseline(char ***command, char *line);
+int execute_command(char *command[], char *shell, int n);
 int printarray(char *array[]);
 char *_getenv(char *);
 path *printlist(path *head);
@@ -36,6 +36,7 @@ int _fprintf(int fd, const char *format, ...);
 int print_prompt(char *prompt);
 ssize_t _getline(char **line);
 ssize_t _getchar(char c);
+
 extern char **environ;
 path *envpath;
 int status;

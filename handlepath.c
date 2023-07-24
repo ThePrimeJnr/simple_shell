@@ -22,50 +22,10 @@ char *_getenv(char *var)
 	return (value);
 }
 
-
-path *initpath(void)
-{
-	char *path_env = NULL;
-	char *path_copy = NULL;
-	char *dir = NULL;
-	path *head = NULL;
-	path *temp = NULL;
-
-	path_env = _getenv("PATH");
-	if (path_env)
-	{
-		path_copy = strdup(path_env);
-		if (!path_copy)
-		{
-			perror("Memory allocation failed");
-			exit(EXIT_FAILURE);
-		}
-
-		dir = strtok(path_copy, ":");
-		while (dir)
-		{
-			temp = malloc(sizeof(path));
-			if (!temp)
-			{
-				perror("Memory allocation failed");
-				exit(EXIT_FAILURE);
-			}
-			temp->dir = strdup(dir);
-			temp->next = head;
-			head = temp;
-
-			dir = strtok(NULL, ":");
-		}
-
-	free(path_copy);
-	}
-
-	return (head);
-}
-
 char *findpath(path *head, char *command)
 {
-	path *current = head;
+	int i = 0;
+	path_val = _getenv("PATH");
 
 	if (access(command, F_OK) == 0)
 		return (strdup(command));
