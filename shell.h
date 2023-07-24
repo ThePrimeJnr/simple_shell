@@ -21,7 +21,7 @@ typedef struct path
 
 path *initpath(void);
 path *printpath(path *head);
-char *findpath(path *head, char *command);
+char *findpath(char *command);
 int handle_builtin(char *command[], int n);
 int arraycpy(char *dest[], char *src[]);
 int parseline(char ***command, char *line);
@@ -33,12 +33,12 @@ int _fputchar(int fd, char c);
 int _fputint(int fd, int num);
 int _fputstr(int fd, char *str);
 int _fprintf(int fd, const char *format, ...);
+char** _strtok(char* str, char delimiter);
 int print_prompt(char *prompt);
 ssize_t _getline(char **line);
 ssize_t _getchar(char c);
 
 extern char **environ;
-path *envpath;
 int status;
 
 #endif /* SHELL_H */

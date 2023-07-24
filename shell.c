@@ -110,7 +110,7 @@ int execute_command(char *command[], char *shell, int n)
 
 	if (command[0] && handle_builtin(command, n))
 	{
-		command_path = findpath(envpath, command[0]);
+		command_path = findpath(command[0]);
 		if (command_path)
 		{
 			cpid = fork();
