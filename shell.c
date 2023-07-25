@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 	shell_index = 1;
 	status = 0;
 
-	while (1)
+	while (argc)
 	{
 		print_prompt("$ ");
 
