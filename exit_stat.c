@@ -1,5 +1,11 @@
 #include "shell.h"
 
+/**
+ * exit_stat - exits the shell with a status
+ * @exit_status: the exit status
+ *
+ * Return: exits the shell and other cases return 2
+ */
 int exit_stat(char *exit_status)
 {
 	if (!exit_status)

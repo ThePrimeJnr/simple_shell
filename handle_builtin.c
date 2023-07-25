@@ -2,7 +2,6 @@
 
 /**
  * handle_builtin - Handles builtin commands like exit, env, e.t.c
- * @command: The command to be executed
  *
  * Return: 0 for success, else status
  */

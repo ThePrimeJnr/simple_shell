@@ -2,9 +2,6 @@
 
 /**
  * execute_command -  a function to execute a command
- * @command: an array of the command to be executed
- * @shell: the name of the shell program
- * @n: the index of the command to be executed
  *
  * Return: the status of the command executed
  */

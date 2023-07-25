@@ -13,14 +13,7 @@
 #include <sys/wait.h>
 #include <limits.h>
 #define _INT_MIN (1 << (sizeof(int) * 8 - 1))
-typedef struct path
-{
-	char *dir;
-	struct path *next;
-} path;
 
-path *initpath(void);
-path *printpath(path *head);
 char *findpath(void);
 int handle_builtin(void);
 int arraycpy(char *dest[], char *src[]);
@@ -28,7 +21,6 @@ int execute_command(void);
 int printarray(char *array[]);
 char *_getenv(char *);
 void free_array(char **arr);
-path *printlist(path *head);
 int _fputchar(int fd, char c);
 int _fputint(int fd, int num);
 int _fputstr(int fd, char *str);

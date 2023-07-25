@@ -2,7 +2,6 @@
 
 /**
  * findpath - searches through the directories to find a command
- * @command: The command to search for (
  *
  * Return: absolute path to the command if found, else NULL
  */
