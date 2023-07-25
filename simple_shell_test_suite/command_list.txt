@@ -44,6 +44,7 @@
 ./checker.bash ./hsh ./4.Simple_shell_0.4/exit_no_arg.bash
 #####   5.SIMPLE_SHELL_1.0   #####
 ./checker.bash ./hsh ./5.Simple_shell_1.0/env.bash
+./checker.bash ./hsh ./5.Simple_shell_1.0/env_ignore_env.bash
 ./checker.bash ./hsh ./5.Simple_shell_1.0/env_one_var.bash
 #####   6.SIMPLE_SHELL_0.1.1   #####
 ./checker.bash ./hsh ./6.Simple_shell_0.1.1/bin_ls.bash

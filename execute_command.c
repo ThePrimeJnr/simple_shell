@@ -8,7 +8,7 @@
  *
  * Return: the status of the command executed
  */
-int execute_command(char *command[], char *shell, int n)
+int execute_command(char *shell, int n)
 {
 	char *command_path;
 	pid_t cpid;

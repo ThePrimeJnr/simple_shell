@@ -9,7 +9,11 @@
 int handle_builtin(char *command[])
 {
 	if (!strcmp(command[0], "exit"))
+	{
+		free(line);
+		free_array(command);
 		exit(status);
+	}
 
 	if (!strcmp(command[0], "env"))
 	{

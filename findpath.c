@@ -10,7 +10,7 @@ char *findpath(char *command)
 {
 	int i = 0;
 	char *path_val = _getenv("PATH");
-	char **path_dir;
+	char **path_dir, *abs_path;
 
 	if (access(command, F_OK) == 0)
 		return (strdup(command));
@@ -22,17 +22,19 @@ char *findpath(char *command)
 
 	for (i = 0; path_dir[i]; i++)
 	{
-		char abs_path[1024];
-
+		abs_path = malloc(1024);
 		strcpy(abs_path, path_dir[i]);
 		strcat(abs_path, "/");
 		strcat(abs_path, command);
+		
 		if (access(abs_path, F_OK) == 0)
 		{
 			free_array(path_dir);
-			return (strdup(abs_path));
+			return (abs_path);
 		}
+		free(abs_path);
 	}
+	free_array(path_dir);
 
 	return (NULL);
 }

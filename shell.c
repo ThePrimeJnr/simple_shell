@@ -9,8 +9,6 @@
  */
 int main(int argc, char *argv[])
 {
-	char *line = NULL;
-	char **command;
 	int index = 1;
 
 	status = 0;
@@ -22,7 +20,7 @@ int main(int argc, char *argv[])
 
 		command = strtoarr(line, ' ');
 
-		status = execute_command(command, argv[0], index++);
+		status = execute_command(argv[0], index++);
 
 		free(line);
 		free_array(command);

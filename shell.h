@@ -24,8 +24,7 @@ path *printpath(path *head);
 char *findpath(char *command);
 int handle_builtin(char *command[]);
 int arraycpy(char *dest[], char *src[]);
-int parseline(char ***command, char *line);
-int execute_command(char *command[], char *shell, int n);
+int execute_command(char *shell, int n);
 int printarray(char *array[]);
 char *_getenv(char *);
 void free_array(char **arr);
@@ -41,5 +40,7 @@ ssize_t _getchar(char c);
 
 extern char **environ;
 int status;
+char *line;
+char **command;
 
 #endif /* SHELL_H */
