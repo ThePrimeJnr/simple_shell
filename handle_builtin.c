@@ -8,6 +8,8 @@
  */
 int handle_builtin(void)
 {
+	if (!command[0])
+		return (0);
 	if (!strcmp(command[0], "exit"))
 	{
 		status = exit_stat(command[1]);

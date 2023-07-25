@@ -14,8 +14,7 @@ int execute_command(void)
 	pid_t cpid;
 	int exit_status;
 
-	status = handle_builtin();
-	if (command[0] && status)
+	if (command[0] && handle_builtin())
 	{
 		command_path = findpath();
 		if (command_path)
