@@ -22,7 +22,7 @@ typedef struct path
 path *initpath(void);
 path *printpath(path *head);
 char *findpath(char *command);
-int handle_builtin(char *command[], int n);
+int handle_builtin(char *command[]);
 int arraycpy(char *dest[], char *src[]);
 int parseline(char ***command, char *line);
 int execute_command(char *command[], char *shell, int n);
