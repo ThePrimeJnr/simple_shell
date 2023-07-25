@@ -12,7 +12,7 @@ char *findpath(void)
 	char **path_dir, *abs_path;
 
 	if (access(command[0], F_OK) == 0)
-		return (strdup(command[0]));
+		return (_strdup(command[0]));
 
 	if (!path_val)
 		return (NULL);
@@ -22,9 +22,9 @@ char *findpath(void)
 	for (i = 0; path_dir[i]; i++)
 	{
 		abs_path = malloc(1024);
-		strcpy(abs_path, path_dir[i]);
-		strcat(abs_path, "/");
-		strcat(abs_path, command[0]);
+		_strcpy(abs_path, path_dir[i]);
+		_strcat(abs_path, "/");
+		_strcat(abs_path, command[0]);
 
 		if (access(abs_path, F_OK) == 0)
 		{
