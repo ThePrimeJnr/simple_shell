@@ -9,10 +9,9 @@
 int handle_builtin(char *command[])
 {
 	if (!strcmp(command[0], "exit"))
-	{
 		exit(status);
-	}
-	else if (!strcmp(command[0], "env"))
+
+	if (!strcmp(command[0], "env"))
 	{
 		printarray(environ);
 		return (0);

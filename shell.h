@@ -34,7 +34,7 @@ int _fputchar(int fd, char c);
 int _fputint(int fd, int num);
 int _fputstr(int fd, char *str);
 int _fprintf(int fd, const char *format, ...);
-char** strtoarr(char* str, char delim);
+char **strtoarr(char *str, char delim);
 int print_prompt(char *prompt);
 ssize_t _getline(char **line);
 ssize_t _getchar(char c);

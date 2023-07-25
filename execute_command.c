@@ -28,15 +28,15 @@ int execute_command(char *command[], char *shell, int n)
 				exit(0);
 			}
 			else
-				waitpid(cpid, &status, 0);
+				wait(NULL);
 		}
 		else
 		{
 			_fprintf(2, "%s: %d: %s: not found\n", shell, n, command[0]);
-			status = 127;
-			return (status);
+			return (127);
 		}
+		free(command_path);
 	}
 
-	return (0);
+	return (status);
 }

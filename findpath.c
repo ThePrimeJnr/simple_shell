@@ -12,11 +12,13 @@ char *findpath(char *command)
 	char *path_val = _getenv("PATH");
 	char **path_dir;
 
-	if (path_val != NULL)
-		path_dir = strtoarr(path_val, ':');
-
 	if (access(command, F_OK) == 0)
 		return (strdup(command));
+
+	if (!path_val)
+		return (NULL);
+
+	path_dir = strtoarr(path_val, ':');
 
 	for (i = 0; path_dir[i]; i++)
 	{
@@ -27,11 +29,10 @@ char *findpath(char *command)
 		strcat(abs_path, command);
 		if (access(abs_path, F_OK) == 0)
 		{
+			free_array(path_dir);
 			return (strdup(abs_path));
 		}
 	}
-
-	free(path_dir);
 
 	return (NULL);
 }

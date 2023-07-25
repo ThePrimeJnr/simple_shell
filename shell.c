@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
 	char *line = NULL;
 	char **command;
-	int index = 0;
+	int index = 1;
 
 	status = 0;
 	while (1)
