@@ -6,13 +6,12 @@
  *
  * Return: 0 for success, else status
  */
-int handle_builtin(char *command[])
+int handle_builtin(void)
 {
 	if (!strcmp(command[0], "exit"))
 	{
-		free(line);
-		free_array(command);
-		exit(status);
+		status = exit_stat(command[1]);
+		return (0);
 	}
 
 	if (!strcmp(command[0], "env"))

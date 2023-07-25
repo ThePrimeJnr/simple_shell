@@ -6,14 +6,14 @@
  *
  * Return: absolute path to the command if found, else NULL
  */
-char *findpath(char *command)
+char *findpath(void)
 {
 	int i = 0;
 	char *path_val = _getenv("PATH");
 	char **path_dir, *abs_path;
 
-	if (access(command, F_OK) == 0)
-		return (strdup(command));
+	if (access(command[0], F_OK) == 0)
+		return (strdup(command[0]));
 
 	if (!path_val)
 		return (NULL);
@@ -25,8 +25,8 @@ char *findpath(char *command)
 		abs_path = malloc(1024);
 		strcpy(abs_path, path_dir[i]);
 		strcat(abs_path, "/");
-		strcat(abs_path, command);
-		
+		strcat(abs_path, command[0]);
+
 		if (access(abs_path, F_OK) == 0)
 		{
 			free_array(path_dir);

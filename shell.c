@@ -9,9 +9,10 @@
  */
 int main(int argc, char *argv[])
 {
-	int index = 1;
-
+	shell = argv[0];
+	shell_index = 1;
 	status = 0;
+
 	while (1)
 	{
 		print_prompt("$ ");
@@ -20,7 +21,7 @@ int main(int argc, char *argv[])
 
 		command = strtoarr(line, ' ');
 
-		status = execute_command(argv[0], index++);
+		status = execute_command();
 
 		free(line);
 		free_array(command);

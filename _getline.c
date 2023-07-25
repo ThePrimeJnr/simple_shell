@@ -14,7 +14,7 @@ ssize_t _getline(char **line)
 	while ((read(0, &buf[n], 1)) > 0 && (buf[n] != '\n'))
 		n++;
 
-	if (n != 0)
+	if (buf[n] == '\n' || n != 0)
 	{
 		*line = malloc(sizeof(char) * (n + 1));
 		buf[n] = '\0';
@@ -24,6 +24,7 @@ ssize_t _getline(char **line)
 	}
 	else
 	{
+		buf[n] = '\0';
 		free(buf);
 		if (isatty(0))
 			_fprintf(1, "\n");

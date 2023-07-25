@@ -11,7 +11,7 @@
 #include <sys/stat.h>
 #include <stdarg.h>
 #include <sys/wait.h>
-
+#include <limits.h>
 #define _INT_MIN (1 << (sizeof(int) * 8 - 1))
 typedef struct path
 {
@@ -21,10 +21,10 @@ typedef struct path
 
 path *initpath(void);
 path *printpath(path *head);
-char *findpath(char *command);
-int handle_builtin(char *command[]);
+char *findpath(void);
+int handle_builtin(void);
 int arraycpy(char *dest[], char *src[]);
-int execute_command(char *shell, int n);
+int execute_command(void);
 int printarray(char *array[]);
 char *_getenv(char *);
 void free_array(char **arr);
@@ -37,10 +37,14 @@ char **strtoarr(char *str, char delim);
 int print_prompt(char *prompt);
 ssize_t _getline(char **line);
 ssize_t _getchar(char c);
+int exit_stat(char *exit_status);
+int _atoi(const char* str);
 
 extern char **environ;
 int status;
 char *line;
 char **command;
+int shell_index;
+char *shell;
 
 #endif /* SHELL_H */
