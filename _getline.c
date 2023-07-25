@@ -18,14 +18,14 @@ ssize_t _getline(char **line)
 	{
 		*line = malloc(sizeof(char) * (n + 1));
 		buf[n] = '\0';
-		strcpy(*line, buf);
+		_strcpy(*line, buf);
 		return (n);
 	}
 	else if (n != 0)
 	{
 		buf[n] = '\0';
 		*line = malloc(sizeof(char) * (n + 1));
-		strcpy(*line, buf);
+		_strcpy(*line, buf);
 		return (-1);
 	}
 	else
