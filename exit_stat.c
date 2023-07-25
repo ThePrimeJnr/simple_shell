@@ -2,7 +2,6 @@
 
 int exit_stat(char *exit_status)
 {
-	
 	if (!exit_status)
 	{
 		free(line);
@@ -19,6 +18,8 @@ int exit_stat(char *exit_status)
 		exit(status);
 	}
 
-	_fprintf(2, "%s: %i: exit: Illegal number: %s\n", shell, shell_index, exit_status);
+	_fprintf(2, "%s: %i: exit: ", shell, shell_index);
+	_fprintf(2, "Illegal number: %s\n", exit_status);
+
 	return (2);
 }

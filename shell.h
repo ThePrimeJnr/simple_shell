@@ -38,7 +38,7 @@ int print_prompt(char *prompt);
 ssize_t _getline(char **line);
 ssize_t _getchar(char c);
 int exit_stat(char *exit_status);
-int _atoi(const char* str);
+int _atoi(const char *str);
 
 extern char **environ;
 int status;

@@ -13,7 +13,7 @@ ssize_t _getline(char **line)
 
 	while ((read(0, &buf[n], 1)) > 0 && (buf[n] != '\n'))
 		n++;
-	
+
 	if (buf[n] == '\n')
 	{
 		*line = malloc(sizeof(char) * (n + 1));
@@ -32,6 +32,6 @@ ssize_t _getline(char **line)
 	{
 		if (isatty(0))
 			_fprintf(1, "\n");
-		exit (status);
+		exit(status);
 	}
 }
