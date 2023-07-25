@@ -9,8 +9,9 @@
  */
 int main(int argc, char *argv[])
 {
-	char *line;
+	char *line = NULL;
 	char **command;
+	int i;
 
 	status = 0;
 	for (argc = 1; argc; argc++)
@@ -19,12 +20,15 @@ int main(int argc, char *argv[])
 
 		_getline(&line);
 
-		parseline(&command, line);
+		command = strtoarr(line, ' ');	
+
 
 		status = execute_command(command, argv[0], argc);
-
 		free(line);
-		free(command);
+
+		free_array(command);
+
+		command = NULL;
 	}
 
 	return (status);
@@ -39,9 +43,8 @@ int main(int argc, char *argv[])
 int print_prompt(char *prompt)
 {
 	if (isatty(0))
-	{
 		_fputstr(1, prompt);
-	}
+
 	return (0);
 }
 
@@ -53,13 +56,11 @@ int print_prompt(char *prompt)
  */
 ssize_t _getline(char **line)
 {
-	char buf[1024];
+	char buf[8024];
 	ssize_t n = 0;
 
-	while ((read(0, &buf[n], 1)) && (buf[n] != '\n'))
-	{
+	while ((read(0, &buf[n], 1)) > 0 && (buf[n] != '\n'))
 		n++;
-	}	
 	
 	if (buf[n] == '\n')
 	{
@@ -81,26 +82,6 @@ ssize_t _getline(char **line)
 			_fprintf(1, "\n");
 		exit (status);
 	}
-}
-
-/**
- * parseline - Tokenizes the line to get command and it's arguments
- * @line: line to be tokenized
- *
- * Return: Pointer to the command and its arguments
- */
-int parseline(char ***command, char *line)
-{
-	int i = 0;
-
-	(*command) = malloc(sizeof(char) * 1024);
-
-	(*command)[i] = strtok(line, " ");
-	for (i = 1; (*command)[i - 1]; i++)
-		(*command)[i] = strtok(NULL, " ");
-
-	(*command)[i] = NULL;
-	return (0);
 }
 
 int execute_command(char *command[], char *shell, int n)

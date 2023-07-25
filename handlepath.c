@@ -22,35 +22,58 @@ char *_getenv(char *var)
 	return (value);
 }
 
-char** _strtok(char* str, char delimiter)
+char **strtoarr(char *str, char delimiter)
 {
 	int i = 0, j = 0, k = 0;
-	char buf[1024];
-	char **token = (char**)malloc(sizeof(char*) * 1024);
+	int str_len = strlen(str);
+	char **arr = (char **)malloc(sizeof(char *) * (str_len + 1));
+	char *buf = (char *)malloc(sizeof(char) * (str_len + 1));
 
-	for (; str[i]; i++, k++)
+
+	for (; i < str_len + 1; i++)
 	{
-		buf[k] = str[i];
-		if (str[i] == delimiter || str[i] == '\0')
+		if (str[i] != delimiter && str[i] != '\0')
 		{
-			buf[k] = '\0';
-			token[j] = malloc(sizeof(char) * (k + 1));
-			strcpy(token[j], buf);
-			j++;
-			k = -1;
+			buf[k] = str[i];
+			k++;
+		}
+		else 
+		{
+			if (k > 0)
+			{
+				buf[k] = '\0';
+				arr[j] = malloc(sizeof(char) * (k + 1));
+				strcpy(arr[j], buf);
+				j++;
+				k = 0;
+			}
 		}
 	}
 
-	return token;
-}
+	arr[j] = NULL;
 
+	free(buf);
+
+	return arr;
+}
+void free_array(char **arr) {
+	if (arr == NULL)
+		return;
+
+	for (int i = 0; arr[i] != NULL; i++) {
+		free(arr[i]);
+	}
+
+	free(arr);
+}
 char *findpath(char *command)
 {
 	int i = 0;
 	char *path_val = _getenv("PATH");
 	char **path_dir;
 
-	path_dir = _strtok(path_val, ':');
+	if (path_val != NULL)
+		path_dir = strtoarr(path_val, ':');
 
 	if (access(command, F_OK) == 0)
 		return (strdup(command));
@@ -67,6 +90,8 @@ char *findpath(char *command)
 			return (strdup(abs_path));
 		}
 	}
+
+	free(path_dir);
 
 	return (NULL);
 }
