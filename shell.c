@@ -10,10 +10,11 @@
 int main(int argc, char *argv[])
 {
 	shell = argv[0];
-	shell_index = 1;
+	shell_index = 0;
 	status = 0;
 
-	while (argc)
+	(void)argc;
+	while (++shell_index)
 	{
 		print_prompt("$ ");
 
