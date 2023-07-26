@@ -112,7 +112,7 @@ int printarray(char *array[])
 
 	while (array[i])
 	{
-		_fprintf(1, "%s\n", array[i]);
+		_fprintf(1, "%a\n", array[i], 0, "nill");
 		i++;
 	}
 	return (0);
