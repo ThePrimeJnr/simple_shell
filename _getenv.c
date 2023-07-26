@@ -13,9 +13,9 @@ char *_getenv(char *var)
 
 	for (i = 0; environ[i]; i++)
 	{
-		if (!strncmp(environ[i], var, strlen(var)) && environ[i][strlen(var)] == '=')
+		if (!_strncmp(environ[i], var, _strlen(var)) && environ[i][_strlen(var)] == '=')
 		{
-			value = environ[i] + strlen(var) + 1;
+			value = environ[i] + _strlen(var) + 1;
 			return (value);
 		}
 	}
