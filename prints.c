@@ -72,6 +72,9 @@ int _fputint(int fd, int num)
  * _fprintf - Prints to the standar output like regular printf
  * @fd: file descriptor
  * @format: The string to be printed adn its format specifiers
+ * @s1: string 1
+ * @s2: string 2
+ * @n1: num 1
  *
  * Return: Length of printed string
  */
