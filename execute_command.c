@@ -34,7 +34,7 @@ int execute_command(void)
 		}
 		else
 		{
-			_fprintf(2, "%s: %d: %s: not found\n", shell, shell_index, command[0]);
+			_fprintf(2, "%a: %b: %c: not found\n", shell, shell_index, command[0]);
 			return (127);
 		}
 		free(command_path);
