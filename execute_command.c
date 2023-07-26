@@ -28,6 +28,8 @@ int execute_command(void)
 			else
 			{
 				waitpid(cpid, &exit_status, 0);
+				if (WIFEXITED(exit_status))
+					status = WEXITSTATUS(exit_status);
 			}
 		}
 		else

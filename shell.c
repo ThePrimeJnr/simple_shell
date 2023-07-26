@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	(void)argc;
 	while (++shell_index)
 	{
-		print_prompt("$ ");
+		print_prompt("#cisfun$ ");
 
 		_getline(&line);
 
