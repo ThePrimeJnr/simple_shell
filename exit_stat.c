@@ -24,8 +24,8 @@ int exit_stat(char *exit_status)
 		exit(status);
 	}
 
-	_fprintf(2, "%s: %i: exit: ", shell, shell_index);
-	_fprintf(2, "Illegal number: %s\n", exit_status);
+	_fprintf(2, "%a: %b: exit: ", shell, shell_index, "nill");
+	_fprintf(2, "Illegal number: %a\n", exit_status, 0, "nill");
 
 	return (2);
 }
