@@ -92,7 +92,7 @@ int _fprintf(int fd, const char *format, char *s1, int n1, char *s2)
 			i++;
 			if (format[i] == 'a')
 				len += _fputstr(fd, s1);
-			else if (format[i] == 'b' )
+			else if (format[i] == 'b')
 				len += _fputint(fd, n1);
 			else if (format[i] == 'c')
 				len += _fputstr(fd, s2);
