@@ -40,3 +40,23 @@ char **strtoarr(char *str, char delim)
 
 	return (arr);
 }
+
+/**
+ * _strncmp - compares 2 strings till n char
+ * @str1: first string to be compared with
+ * @str2: second string compared on/with first string
+ * @n: number of string to be compared
+ * Return: 0 if equal, positive if s1 < s2, negative if s1 > s2
+ */
+int _strncmp(const char *str1, const char *str2, size_t n)
+{
+	for (size_t i = 0; i < n; i++)
+	{
+		if (str1[i] == '\0' || str2[i] == '\0')
+			return str1[i] - str2[i];
+
+		if (str1[i] != str2[i])
+			return str1[i] - str2[i];
+	}
+	return 0;
+}
