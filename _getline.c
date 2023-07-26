@@ -29,9 +29,5 @@ ssize_t _getline(char **line)
 		return (-1);
 	}
 	else
-	{
-		if (isatty(0))
-			_fprintf(1, "\n", "nill", 0, "nill");
 		exit(status);
-	}
 }
