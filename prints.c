@@ -75,27 +75,27 @@ int _fputint(int fd, int num)
  *
  * Return: Length of printed string
  */
-int _fprintf(int fd, const char *format, ...)
+int _fprintf(int fd, const char *format, char *s1, int n1, char *s2)
 {
-	va_list ls_args;
+
 	int i = 0, len = 0;
 
-	va_start(ls_args, format);
 	while (format[i])
 	{
 		if (format[i] != '%')
 			len += _fputchar(fd, format[i]);
-			else
-			{
+		else
+		{
 			i++;
-			if (format[i] == 's')
-				len += _fputstr(fd, va_arg(ls_args, char *));
-				else if (format[i] == 'd' || format[i] == 'i')
-				len += _fputint(fd, va_arg(ls_args, int));
+			if (format[i] == 'a')
+				len += _fputstr(fd, s1);
+			else if (format[i] == 'b' )
+				len += _fputint(fd, n1);
+			else if (format[i] == 'c')
+				len += _fputstr(fd, s2);
 		}
 		i++;
 	}
-	va_end(ls_args);
 
 	return (len);
 }
