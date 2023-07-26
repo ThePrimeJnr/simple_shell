@@ -8,7 +8,7 @@
  */
 ssize_t _getline(char **line)
 {
-	char buf[8096];
+	char *buf = _calloc(8096, sizeof(char));
 	ssize_t n = 0;
 
 	while ((read(0, &buf[n], 1)) > 0 && (buf[n] != '\n'))
@@ -19,6 +19,7 @@ ssize_t _getline(char **line)
 		*line = malloc(sizeof(char) * (n + 1));
 		buf[n] = '\0';
 		_strcpy(*line, buf);
+		free(buf);
 		return (n);
 	}
 	else if (n != 0)
@@ -26,12 +27,14 @@ ssize_t _getline(char **line)
 		buf[n] = '\0';
 		*line = malloc(sizeof(char) * (n + 1));
 		_strcpy(*line, buf);
+		free(buf);
 		return (-1);
 	}
 	else
 	{
 		if (isatty(0))
 			_fprintf(1, "\n", "nill", 0, "nill");
+		free(buf);
 		exit(status);
 	}
 }

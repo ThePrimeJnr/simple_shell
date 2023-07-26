@@ -37,6 +37,7 @@ char *_strdup(char *str);
 int _strcmp(char *s1, char *s2);
 int _strlen(char *s);
 int _strncmp(const char *str1, const char *str2, size_t n);
+void *_calloc(unsigned int nmemb, unsigned int size);
 
 extern char **environ;
 int status;
