@@ -1,63 +1,31 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
+#include "shell.h"
 
 /**
-* main - Entry point
-* @argc: argument count
-* @argv: argumen vector
-*
-* Return: 0 for success, others for failure
-*/
-
+ * main - Entry point
+ * @argc: argument count
+ * @argv: argument vector
+ *
+ * Return: 0 for success, others for failure
+ */
 int main(int argc, char *argv[])
 {
-	char *line = NULL, *command[1024];
-	size_t len = 0, i = 0;
-	pid_t cpid;
-	struct stat st;
-	int read;
+	shell = argv[0];
+	shell_index = 1;
+	status = 0;
 
-	while (1)
+	while (argc)
 	{
-		if (isatty(0))
-			printf("#cisfun ");
+		print_prompt("$ ");
 
-		read = getline(&line, &len, stdin);
+		_getline(&line);
 
-		if (read == -1)
-			break;
+		command = strtoarr(line, ' ');
 
-		command[0] = strtok(line, " \n");
+		status = execute_command();
 
-		for (i = 1; command[i - 1]; i++)
-			command[i] = strtok(NULL, " \n");
-
-		if (command[0])
-		{
-			if (stat(command[0], &st) == 0)
-			{
-				cpid = fork();
-				if (cpid == -1)
-				{
-					perror("Error: ");
-					return (-1);
-				}
-				if (cpid == 0)
-					execve(command[0], command, NULL);
-			}
-			else
-				printf("%s: No such file or directory\n", argv[0]);
-		}
-
-		wait(&cpid);
+		free(line);
+		free_array(command);
 	}
 
-	free(line);
-
-	return (0);
+	return (status);
 }
