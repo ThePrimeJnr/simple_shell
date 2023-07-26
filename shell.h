@@ -24,7 +24,7 @@ void free_array(char **arr);
 int _fputchar(int fd, char c);
 int _fputint(int fd, int num);
 int _fputstr(int fd, char *str);
-int _fprintf(int fd, const char *format, ...);
+int _fprintf(int fd, const char *format, char *s1, int n1, char *s2);
 char **strtoarr(char *str, char delim);
 int print_prompt(char *prompt);
 ssize_t _getline(char **line);
