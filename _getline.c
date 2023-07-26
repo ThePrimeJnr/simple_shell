@@ -35,3 +35,4 @@ ssize_t _getline(char **line)
 		exit(status);
 	}
 }
+

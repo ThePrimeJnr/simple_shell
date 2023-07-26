@@ -21,3 +21,4 @@ char *_getenv(char *var)
 	}
 	return (value);
 }
+

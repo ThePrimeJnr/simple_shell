@@ -23,7 +23,7 @@ int execute_command(void)
 			{
 				execve(command_path, command, environ);
 				perror("execve");
-				exit(0);
+				exit(EXIT_FAILURE);
 			}
 			else
 			{
@@ -42,3 +42,4 @@ int execute_command(void)
 
 	return (status);
 }
+

@@ -120,3 +120,4 @@ int printarray(char *array[])
 	}
 	return (0);
 }
+

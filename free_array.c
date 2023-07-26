@@ -18,3 +18,4 @@ void free_array(char **arr)
 
 	free(arr);
 }
+

@@ -22,3 +22,4 @@
 - Handle special charactors: ", ', `, \\, *, &, #.
 - Move the cursor.
 - Handle commands with arguments.
+
