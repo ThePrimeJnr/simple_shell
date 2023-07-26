@@ -10,7 +10,7 @@
 char **strtoarr(char *str, char delim)
 {
 	int i = 0, j = 0, k = 0;
-	int str_len = strlen(str);
+	int str_len = _strlen(str);
 	char **arr = (char **)malloc(sizeof(char *) * (str_len + 1));
 	char *buf = (char *)malloc(sizeof(char) * (str_len + 1));
 
