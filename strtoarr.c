@@ -28,7 +28,7 @@ char **strtoarr(char *str, char delim)
 			{
 				buf[k] = '\0';
 				arr[j] = malloc(sizeof(char) * (k + 1));
-				strcpy(arr[j], buf);
+				_strcpy(arr[j], buf);
 				j++;
 				k = 0;
 			}
