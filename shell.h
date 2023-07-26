@@ -31,6 +31,10 @@ ssize_t _getline(char **line);
 ssize_t _getchar(char c);
 int exit_stat(char *exit_status);
 int _atoi(const char *str);
+char *_strcat(char *dest, char *src);
+char *_strcpy(char *dest, char *src);
+char *_strdup(char *str);
+int _strcmp(char *s1, char *s2);
 
 extern char **environ;
 int status;
