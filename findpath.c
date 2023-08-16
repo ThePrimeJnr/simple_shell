@@ -11,7 +11,7 @@ char *findpath(void)
 	char *path_val = _getenv("PATH");
 	char **path_dir, *abs_path;
 
-	if (strncmp(command[0], "./", 2) == 0 || command[0][0] == '/' || strncmp(command[0], "../", 3))
+	if (_strncmp(command[0], "./", 2) == 0 || command[0][0] == '/' || _strncmp(command[0], "../", 3))
 	{
 		if (access(command[0], F_OK) == 0)
 			return _strdup(command[0]);
